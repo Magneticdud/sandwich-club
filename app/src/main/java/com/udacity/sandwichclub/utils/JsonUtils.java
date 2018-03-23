@@ -3,8 +3,12 @@ package com.udacity.sandwichclub.utils;
 import com.udacity.sandwichclub.model.Sandwich;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 public class JsonUtils {
+
+    static final String NAME = "name";
+    static final String MAIN_NAME = "mainName";
 
     public static Sandwich parseSandwichJson(String json) {
         if (json==null) {
@@ -14,7 +18,11 @@ public class JsonUtils {
         }
         //if we're here, that means the string is not empty, so it might contain a json
         try {
-
+            JSONObject sandwichJson = new JSONObject(json);
+            Sandwich sandwich = new Sandwich();
+            JSONObject sandwichNameJson = sandwichJson.getJSONObject(NAME);
+            sandwich.setMainName(sandwichNameJson.getString(MAIN_NAME));
+            return sandwich;
         }
         catch (JSONException e){
             //we got some big error, don't crash the whole app
@@ -22,7 +30,7 @@ public class JsonUtils {
             //sandwich data
             return null;
         }
-
-        return null;
+        //here will never be reached
+        //return null;
     }
 }
