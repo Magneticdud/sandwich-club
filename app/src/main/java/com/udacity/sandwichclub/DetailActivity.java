@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -63,16 +64,35 @@ public class DetailActivity extends AppCompatActivity {
     private void populateUI(Sandwich sandwich) {
         //find the views
         TextView tVOrigin = (TextView) findViewById(R.id.origin_tv);
+        TextView tVLabelOrigin = (TextView) findViewById(R.id.label_origin);
+        TextView tVLabelAlsoKnown = (TextView) findViewById(R.id.label_also_known);
         TextView tVAlsoKnownAs = (TextView) findViewById(R.id.also_known_tv);
         TextView tVIngredients = (TextView) findViewById(R.id.ingredients_tv);
         TextView tVDescription = (TextView) findViewById(R.id.description_tv);
 
         //populate the fields
-        tVOrigin.setText(sandwich.getPlaceOfOrigin());
         tVDescription.setText(sandwich.getDescription());
 
+        //check size of also known as
         if(sandwich.getAlsoKnownAs().size()!=0) {
+            //not empty
             tVAlsoKnownAs.setText(TextUtils.join(", ", sandwich.getAlsoKnownAs()));
+        }
+        else {
+            //empty, so hide the view
+            tVAlsoKnownAs.setVisibility(View.GONE);
+            tVLabelAlsoKnown.setVisibility(View.GONE);
+        }
+
+        //check place of origin
+        String origin = sandwich.getPlaceOfOrigin();
+        if (origin.length()==0) {
+            //no origin, so hide it
+            tVOrigin.setVisibility(View.GONE);
+            tVLabelOrigin.setVisibility(View.GONE);
+        }
+        else {
+            tVOrigin.setText(origin);
         }
 
         if(sandwich.getIngredients().size()!=0) {
