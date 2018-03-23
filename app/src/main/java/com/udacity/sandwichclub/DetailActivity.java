@@ -24,13 +24,15 @@ public class DetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         if (intent == null) {
-            closeOnError();
+            closeOnError(getResources().getString(R.string.detail_error_null));
         }
 
+        //get position from extra
         int position = intent.getIntExtra(EXTRA_POSITION, DEFAULT_POSITION);
+        //if EXTRA_POSITION wasn't there, it returned DEFAULT_POSITION
         if (position == DEFAULT_POSITION) {
             // EXTRA_POSITION not found in intent
-            closeOnError();
+            closeOnError(getResources().getString(R.string.detail_error_position));
             return;
         }
 
@@ -39,7 +41,7 @@ public class DetailActivity extends AppCompatActivity {
         Sandwich sandwich = JsonUtils.parseSandwichJson(json);
         if (sandwich == null) {
             // Sandwich data unavailable
-            closeOnError();
+            closeOnError(getResources().getString(R.string.detail_error_message));
             return;
         }
 
@@ -51,9 +53,9 @@ public class DetailActivity extends AppCompatActivity {
         setTitle(sandwich.getMainName());
     }
 
-    private void closeOnError() {
+    private void closeOnError(String errorDetail) {
         finish();
-        Toast.makeText(this, R.string.detail_error_message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getResources().getString(R.string.error)+"\n"+errorDetail, Toast.LENGTH_SHORT).show();
     }
 
     private void populateUI() {

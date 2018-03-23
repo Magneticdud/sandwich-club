@@ -22,9 +22,11 @@ public class MainActivity extends AppCompatActivity {
         // Simplification: Using a ListView instead of a RecyclerView
         ListView listView = findViewById(R.id.sandwiches_listview);
         listView.setAdapter(adapter);
+        //attach an onItemClick function to each of them
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                //launch the DetailActivity and pass the position of the array with the right data
                 launchDetailActivity(position);
             }
         });
@@ -32,7 +34,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void launchDetailActivity(int position) {
         Intent intent = new Intent(this, DetailActivity.class);
+        //place the position in the extra, giving it a constant name
         intent.putExtra(DetailActivity.EXTRA_POSITION, position);
+        //start the intent, position is in the extra
         startActivity(intent);
     }
 }
