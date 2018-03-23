@@ -3,7 +3,9 @@ package com.udacity.sandwichclub;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
@@ -45,7 +47,7 @@ public class DetailActivity extends AppCompatActivity {
             return;
         }
 
-        populateUI();
+        populateUI(sandwich);
         Picasso.with(this)
                 .load(sandwich.getImage())
                 .into(ingredientsIv);
@@ -58,7 +60,23 @@ public class DetailActivity extends AppCompatActivity {
         Toast.makeText(this, getResources().getString(R.string.error)+"\n"+errorDetail, Toast.LENGTH_SHORT).show();
     }
 
-    private void populateUI() {
+    private void populateUI(Sandwich sandwich) {
+        //find the views
+        TextView tVOrigin = (TextView) findViewById(R.id.origin_tv);
+        TextView tVAlsoKnownAs = (TextView) findViewById(R.id.also_known_tv);
+        TextView tVIngredients = (TextView) findViewById(R.id.ingredients_tv);
+        TextView tVDescription = (TextView) findViewById(R.id.description_tv);
 
+        //populate the fields
+        tVOrigin.setText(sandwich.getPlaceOfOrigin());
+        tVDescription.setText(sandwich.getDescription());
+
+        if(sandwich.getAlsoKnownAs().size()!=0) {
+            tVAlsoKnownAs.setText(TextUtils.join(", ", sandwich.getAlsoKnownAs()));
+        }
+
+        if(sandwich.getIngredients().size()!=0) {
+            tVIngredients.setText(TextUtils.join(", ", sandwich.getIngredients()));
+        }
     }
 }

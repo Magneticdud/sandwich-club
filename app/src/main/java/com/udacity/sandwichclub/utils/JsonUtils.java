@@ -31,11 +31,12 @@ public class JsonUtils {
             JSONObject sandwichJson = new JSONObject(json);
             //create new sandwich object
             Sandwich sandwich = new Sandwich();
+            //name
             JSONObject sandwichNameJson = sandwichJson.getJSONObject(NAME);
             sandwich.setMainName(sandwichNameJson.getString(MAIN_NAME));
 
             //also known
-            JSONArray alsoKnownAs = sandwichName.getJSONArray(ALSO_KNOWN_AS);
+            JSONArray alsoKnownAs = sandwichNameJson.getJSONArray(ALSO_KNOWN_AS);
             List<String> alsoKnownNames = new ArrayList<>(alsoKnownAs.length());
             for(int i=0; i< alsoKnownAs.length(); i++){
                 alsoKnownNames.add(alsoKnownAs.getString(i));
